@@ -27,7 +27,7 @@ const PlanDetails = () => {
   };
 
   const handleSubscribe = async () => {
-    if (!window.confirm(`Subscribe to this plan for $${plan.price}?`)) return;
+    if (!window.confirm(`Subscribe to this plan for ₹${plan.price}?`)) return;
     
     setSubscribing(true);
     try {
@@ -71,7 +71,7 @@ const PlanDetails = () => {
         </div>
         
         <div className="plan-meta">
-          <span className="price">${plan.price}</span>
+          <span className="price">₹{plan.price}</span>
           {hasFullAccess && <span className="duration">{plan.duration} days</span>}
         </div>
 
@@ -105,7 +105,7 @@ const PlanDetails = () => {
                 className="btn btn-primary"
                 disabled={subscribing}
               >
-                {subscribing ? 'Subscribing...' : `Subscribe for $${plan.price}`}
+                {subscribing ? 'Subscribing...' : `Subscribe for ₹${plan.price}`}
               </button>
             )}
           </>

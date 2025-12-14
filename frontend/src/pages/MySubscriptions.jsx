@@ -57,7 +57,7 @@ const MySubscriptions = () => {
                         By {plan.trainer.name}
                       </Link>
                     </p>
-                    <p className="price">${plan.price}</p>
+                    <p className="price">₹{plan.price}</p>
                     <p className="description">{plan.description}</p>
                     <p className="duration">Duration: {plan.duration} days</p>
                     <p className="purchased-date">

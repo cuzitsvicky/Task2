@@ -52,7 +52,7 @@ const LandingPage = () => {
             <div key={plan._id} className="plan-card">
               <h3>{plan.title}</h3>
               <p className="trainer-name">By {plan.trainer?.name}</p>
-              <p className="price">${plan.price}</p>
+              <p className="price">₹{plan.price}</p>
               {plan.description ? (
                 <>
                   <p className="description">{plan.description}</p>

@@ -117,7 +117,7 @@ const TrainerDashboard = () => {
               </div>
               <div className="form-row">
                 <div className="form-group">
-                  <label>Price ($)</label>
+                  <label>Price (₹)</label>
                   <input
                     type="number"
                     step="0.01"
@@ -157,7 +157,7 @@ const TrainerDashboard = () => {
                 <h3>{plan.title}</h3>
                 <p className="description">{plan.description}</p>
                 <div className="plan-meta">
-                  <span className="price">${plan.price}</span>
+                  <span className="price">₹{plan.price}</span>
                   <span className="duration">{plan.duration} days</span>
                 </div>
                 <div className="plan-actions">

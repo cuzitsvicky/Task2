@@ -72,7 +72,7 @@ const UserFeed = () => {
                         {plan.trainer.name}
                       </Link>
                     </p>
-                    <p className="price">${plan.price}</p>
+                    <p className="price">₹{plan.price}</p>
                     {plan.isSubscribed && (
                       <span className="subscribed-badge">Subscribed</span>
                     )}

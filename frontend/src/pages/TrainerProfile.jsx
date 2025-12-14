@@ -105,7 +105,7 @@ const TrainerProfile = () => {
             {plans.map((plan) => (
               <div key={plan._id} className="plan-card">
                 <h3>{plan.title}</h3>
-                <p className="price">${plan.price}</p>
+                <p className="price">₹{plan.price}</p>
                 <p className="description">{plan.description}</p>
                 <p className="duration">Duration: {plan.duration} days</p>
                 <Link to={`/plans/${plan._id}`} className="btn btn-primary">
