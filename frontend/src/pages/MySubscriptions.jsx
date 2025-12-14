@@ -33,10 +33,6 @@ const MySubscriptions = () => {
     <div className="subscriptions-page">
       <header className="page-header">
         <h1>My Subscriptions</h1>
-        <nav>
-          <Link to="/">All Plans</Link>
-          <Link to="/feed">My Feed</Link>
-        </nav>
       </header>
 
       {loading ? (

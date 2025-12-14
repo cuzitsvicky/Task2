@@ -20,7 +20,8 @@ const Signup = () => {
     const result = await signup(name, email, password, role);
     
     if (result.success) {
-      navigate('/');
+      // Redirect to feed for both users and trainers
+      navigate('/feed');
     } else {
       setError(result.message);
     }
@@ -28,8 +29,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-card">
+    <div className="auth-page glass-background">
+      <div className="auth-card glass-card">
         <h2>Sign Up</h2>
         <form onSubmit={handleSubmit}>
           {error && <div className="error-message">{error}</div>}
@@ -40,6 +41,7 @@ const Signup = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
+              className="glass-input"
             />
           </div>
           <div className="form-group">
@@ -49,6 +51,7 @@ const Signup = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className="glass-input"
             />
           </div>
           <div className="form-group">
@@ -59,16 +62,17 @@ const Signup = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength="6"
+              className="glass-input"
             />
           </div>
           <div className="form-group">
             <label>Role</label>
-            <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <select value={role} onChange={(e) => setRole(e.target.value)} className="glass-input">
               <option value="user">User</option>
               <option value="trainer">Trainer</option>
             </select>
           </div>
-          <button type="submit" className="btn btn-primary" disabled={loading}>
+          <button type="submit" className="btn btn-primary glass-button" disabled={loading}>
             {loading ? 'Signing up...' : 'Sign Up'}
           </button>
         </form>

@@ -42,11 +42,6 @@ const LandingPage = () => {
     <div className="landing-page">
       <header className="page-header">
         <h1>All Fitness Plans</h1>
-        <nav>
-          <Link to="/feed">My Feed</Link>
-          {user.role === 'trainer' && <Link to="/dashboard">Dashboard</Link>}
-          {user.role === 'user' && <Link to="/my-subscriptions">My Subscriptions</Link>}
-        </nav>
       </header>
 
       {loading ? (

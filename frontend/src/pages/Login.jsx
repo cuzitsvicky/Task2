@@ -18,7 +18,8 @@ const Login = () => {
     const result = await login(email, password);
     
     if (result.success) {
-      navigate('/');
+      // Redirect to feed for both users and trainers
+      navigate('/feed');
     } else {
       setError(result.message);
     }
@@ -26,8 +27,8 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-card">
+    <div className="auth-page glass-background">
+      <div className="auth-card glass-card">
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
           {error && <div className="error-message">{error}</div>}
@@ -38,6 +39,7 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className="glass-input"
             />
           </div>
           <div className="form-group">
@@ -47,13 +49,14 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              className="glass-input"
             />
           </div>
-          <button type="submit" className="btn btn-primary" disabled={loading}>
+          <button type="submit" className="btn btn-primary glass-button" disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-        <p className="auth-link">
+        <p className="auth-link font-weight-bold">
           Don't have an account? <Link to="/signup">Sign up</Link>
         </p>
       </div>

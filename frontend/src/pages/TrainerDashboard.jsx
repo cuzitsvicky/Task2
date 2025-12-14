@@ -80,10 +80,6 @@ const TrainerDashboard = () => {
     <div className="dashboard-page">
       <header className="page-header">
         <h1>Trainer Dashboard</h1>
-        <nav>
-          <button onClick={() => navigate('/')} className="btn btn-secondary">All Plans</button>
-          <button onClick={() => navigate('/feed')} className="btn btn-secondary">Feed</button>
-        </nav>
       </header>
 
       <div className="dashboard-content">
