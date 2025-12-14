@@ -176,9 +176,26 @@ The frontend will run on `http://localhost:5173` (or the port Vite assigns)
 └── README.md
 ```
 
+## Deployment
+
+For detailed deployment instructions, see:
+- **[QUICK_DEPLOY.md](./QUICK_DEPLOY.md)** - Step-by-step deployment guide
+- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Comprehensive deployment documentation
+- **[DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md)** - Deployment checklist
+
+### Quick Deployment Overview
+
+1. **Database:** Set up MongoDB Atlas (free tier)
+2. **Backend:** Deploy to Railway or Render
+3. **Frontend:** Deploy to Vercel
+4. **Environment Variables:** Configure in each platform
+
+See the deployment guides for detailed instructions.
+
 ## Notes
 
 - Make sure MongoDB is running before starting the backend
 - Update the JWT_SECRET in `.env` with a secure random string for production
 - The subscription payment is simulated (no real payment gateway)
 - All routes except signup/login require authentication via JWT token
+- For production, update `VITE_API_URL` in frontend to point to your deployed backend

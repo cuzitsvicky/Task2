@@ -24,6 +24,11 @@
   .animation-delay-4000 {
     animation-delay: 4s;
   }
+  
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 @keyframes blob {

@@ -132,21 +132,21 @@ const PlanDetails = () => {
   const hasFullAccess = plan.description || plan.isSubscribed || user?.role === 'trainer';
 
   return (
-    <div className="min-h-screen bg-black py-8 px-4">
+    <div className="min-h-screen bg-black py-4 sm:py-8 px-4">
       <div className="max-w-4xl mx-auto">
         <button
           onClick={() => navigate(-1)}
-          className="mb-6 px-4 py-2 bg-black text-white font-semibold rounded-lg hover:scale-105 transition-transform duration-200 border border-white"
+          className="mb-4 sm:mb-6 px-4 py-2 bg-black text-white font-semibold rounded-lg hover:scale-105 transition-transform duration-200 border border-white touch-manipulation text-sm sm:text-base"
         >
           ← Back
         </button>
 
-        <div className="bg-black border border-white rounded-xl p-8">
-          <h1 className="text-4xl font-bold text-white mb-4">{plan.title}</h1>
-          <div className="mb-6 flex items-center gap-3">
+        <div className="bg-black border border-white rounded-xl p-4 sm:p-6 lg:p-8">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">{plan.title}</h1>
+          <div className="mb-4 sm:mb-6 flex flex-wrap items-center gap-2 sm:gap-3">
             <Link
               to={`/trainers/${plan.trainer?._id}`}
-              className="text-white text-lg hover:scale-105 transition-transform duration-200 inline-block"
+              className="text-white text-base sm:text-lg hover:scale-105 transition-transform duration-200 inline-block"
             >
               {plan.trainer?.name}
             </Link>
@@ -165,18 +165,18 @@ const PlanDetails = () => {
             )}
           </div>
           
-          <div className="flex items-center gap-6 mb-6">
-            <span className="text-3xl font-bold text-white">₹{plan.price}</span>
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 mb-4 sm:mb-6">
+            <span className="text-2xl sm:text-3xl font-bold text-white">₹{plan.price}</span>
             {hasFullAccess && (
-              <span className="text-white">{plan.duration} days</span>
+              <span className="text-sm sm:text-base text-white">{plan.duration} days</span>
             )}
           </div>
 
           {hasFullAccess ? (
             <>
-              <div className="mb-6">
-                <h3 className="text-xl font-semibold text-white mb-3">Description</h3>
-                <p className="text-white leading-relaxed">{plan.description}</p>
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">Description</h3>
+                <p className="text-sm sm:text-base text-white leading-relaxed">{plan.description}</p>
               </div>
               {plan.isSubscribed && (
                 <div className="mb-6 space-y-3">
@@ -186,7 +186,7 @@ const PlanDetails = () => {
                   {user?.role === 'user' && (
                     <button
                       onClick={handleUnsubscribe}
-                      className="w-full py-3 bg-red-600 text-white font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full py-3 bg-red-600 text-white font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation text-sm sm:text-base"
                       disabled={unsubscribing}
                     >
                       {unsubscribing ? 'Unsubscribing...' : 'Unsubscribe from Plan'}
@@ -197,7 +197,7 @@ const PlanDetails = () => {
               {user?.role === 'user' && !plan.isSubscribed && (
                 <button
                   onClick={handleSubscribe}
-                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation text-sm sm:text-base"
                   disabled={subscribing}
                 >
                   {subscribing ? 'Subscribing...' : 'Subscribe to Plan'}
@@ -206,13 +206,13 @@ const PlanDetails = () => {
             </>
           ) : (
             <>
-              <div className="mb-6 bg-yellow-500/20 border border-yellow-500/50 text-yellow-200 px-4 py-3 rounded-lg">
+              <div className="mb-4 sm:mb-6 bg-yellow-500/20 border border-yellow-500/50 text-yellow-200 px-3 sm:px-4 py-2 sm:py-3 rounded-lg text-sm sm:text-base">
                 <p>Subscribe to view full plan details and access the complete fitness program.</p>
               </div>
               {user?.role === 'user' && (
                 <button
                   onClick={handleSubscribe}
-                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation text-sm sm:text-base"
                   disabled={subscribing}
                 >
                   {subscribing ? 'Subscribing...' : `Subscribe for ₹${plan.price}`}

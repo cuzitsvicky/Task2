@@ -31,13 +31,13 @@ const UserFeed = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-bg py-8 px-4">
+    <div className="min-h-screen bg-black py-4 sm:py-8 px-4">
       <div className="max-w-7xl mx-auto">
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">
+        <header className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2">
             {user?.role === 'trainer' ? 'All Plans' : 'My Feed'}
           </h1>
-          <p className="text-white">
+          <p className="text-sm sm:text-base text-white">
             {user?.role === 'trainer' 
               ? 'Browse all available fitness plans' 
               : 'Plans from trainers you follow'}
@@ -59,7 +59,7 @@ const UserFeed = () => {
                     <p className="text-white mb-4">Start following trainers to see their plans here!</p>
                     <Link
                       to="/"
-                      className="inline-block px-6 py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200"
+                      className="inline-block px-6 py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 touch-manipulation text-sm sm:text-base"
                     >
                       Browse All Plans
                     </Link>
@@ -69,7 +69,7 @@ const UserFeed = () => {
                     <p className="text-white mb-4">No plans available yet.</p>
                     <Link
                       to="/"
-                      className="inline-block px-6 py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200"
+                      className="inline-block px-6 py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 touch-manipulation text-sm sm:text-base"
                     >
                       Browse All Plans
                     </Link>
@@ -78,27 +78,27 @@ const UserFeed = () => {
               </div>
             ) : (
               <div>
-                <h2 className="text-2xl font-semibold text-white mb-6">
+                <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4 sm:mb-6">
                   {user?.role === 'trainer' 
                     ? 'All Fitness Plans' 
                     : 'Plans from Trainers You Follow'}
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {feed.map((plan) => (
                     <div
                       key={plan._id}
-                      className="bg-black border border-white rounded-xl p-6 relative flex flex-col"
+                      className="bg-black border border-white rounded-xl p-4 sm:p-6 relative flex flex-col"
                     >
                       {plan.isSubscribed && (
-                        <span className="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                        <span className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-green-500 text-white text-xs font-bold px-2 sm:px-3 py-1 rounded-full">
                           Subscribed
                         </span>
                       )}
-                      <h3 className="text-xl font-bold text-white mb-2">{plan.title}</h3>
-                      <p className="text-sm text-white mb-3">
+                      <h3 className="text-lg sm:text-xl font-bold text-white mb-2">{plan.title}</h3>
+                      <p className="text-xs sm:text-sm text-white mb-3">
                         {plan.trainer?.name}
                       </p>
-                      <p className="text-2xl font-bold text-white mb-4">₹{plan.price}</p>
+                      <p className="text-xl sm:text-2xl font-bold text-white mb-4">₹{plan.price}</p>
                       {plan.description && (
                         <p className="text-white mb-3 line-clamp-3">{plan.description}</p>
                       )}
@@ -110,7 +110,7 @@ const UserFeed = () => {
                       <div className="mt-auto">
                         <Link
                           to={`/plans/${plan._id}`}
-                          className="block w-full text-center py-2 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200"
+                          className="block w-full text-center py-2 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 touch-manipulation text-sm sm:text-base"
                         >
                           View Details
                         </Link>

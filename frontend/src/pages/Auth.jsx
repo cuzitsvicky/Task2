@@ -72,7 +72,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-black relative overflow-hidden py-4 px-4">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-black rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
@@ -80,14 +80,14 @@ const Auth = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-white rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
 
-      <div className="relative z-10 w-full max-w-md mx-4">
+      <div className="relative z-10 w-full max-w-md mx-auto px-4">
         {/* Glass morphism card */}
-        <div className="bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 p-8">
+        <div className="bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 p-4 sm:p-6 md:p-8">
           {/* Tabs */}
-          <div className="flex space-x-2 mb-8 bg-black/30 rounded-lg p-1">
+          <div className="flex space-x-2 mb-6 sm:mb-8 bg-black/30 rounded-lg p-1">
             <button
               onClick={switchToLogin}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+              className={`flex-1 py-2 px-3 sm:px-4 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 touch-manipulation ${
                 isLogin
                   ? 'bg-white text-black'
                   : 'text-white'
@@ -97,7 +97,7 @@ const Auth = () => {
             </button>
             <button
               onClick={switchToSignup}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+              className={`flex-1 py-2 px-3 sm:px-4 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 touch-manipulation ${
                 !isLogin
                   ? 'bg-white text-black'
                   : 'text-white'
@@ -108,8 +108,8 @@ const Auth = () => {
           </div>
 
           {/* Form */}
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold text-white text-center mb-6">
+          <div className="space-y-4 sm:space-y-6">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white text-center mb-4 sm:mb-6">
               {isLogin ? 'Welcome Back' : 'Create Account'}
             </h2>
 
@@ -120,7 +120,7 @@ const Auth = () => {
             )}
 
             {isLogin ? (
-              <form onSubmit={handleLogin} className="space-y-5">
+              <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5">
                 <div>
                   <label className="block text-sm font-medium text-white mb-2">
                     Email
@@ -130,7 +130,7 @@ const Auth = () => {
                     value={loginEmail}
                     onChange={(e) => setLoginEmail(e.target.value)}
                     required
-                    className="w-full px-4 py-3 bg-black border border-white rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-black border border-white rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-base"
                     placeholder="Enter your email"
                   />
                 </div>
@@ -143,20 +143,20 @@ const Auth = () => {
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
                     required
-                    className="w-full px-4 py-3 bg-black border border-white rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-black border border-white rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-base"
                     placeholder="Enter your password"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation text-base"
                 >
                   {loading ? 'Logging in...' : 'Login'}
                 </button>
               </form>
             ) : (
-              <form onSubmit={handleSignup} className="space-y-5">
+              <form onSubmit={handleSignup} className="space-y-4 sm:space-y-5">
                 <div>
                   <label className="block text-sm font-medium text-white mb-2">
                     Name
@@ -166,7 +166,7 @@ const Auth = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
-                    className="w-full px-4 py-3 bg-black border border-white rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-black border border-white rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-base"
                     placeholder="Enter your name"
                   />
                 </div>
@@ -179,7 +179,7 @@ const Auth = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full px-4 py-3 bg-black border border-white rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-black border border-white rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-base"
                     placeholder="Enter your email"
                   />
                 </div>
@@ -193,7 +193,7 @@ const Auth = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     minLength="6"
-                    className="w-full px-4 py-3 bg-black border border-white rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-black border border-white rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-base"
                     placeholder="Enter your password"
                   />
                 </div>
@@ -204,7 +204,7 @@ const Auth = () => {
                   <select
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                    className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-base touch-manipulation"
                   >
                     <option value="user" className="bg-black">User</option>
                     <option value="trainer" className="bg-black">Trainer</option>
@@ -213,18 +213,18 @@ const Auth = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation text-base"
                 >
                   {loading ? 'Signing up...' : 'Sign Up'}
                 </button>
               </form>
             )}
 
-            <p className="text-center text-white/80 text-sm mt-6">
+            <p className="text-center text-white/80 text-xs sm:text-sm mt-4 sm:mt-6">
               {isLogin ? "Don't have an account? " : 'Already have an account? '}
               <span
                 onClick={isLogin ? switchToSignup : switchToLogin}
-                className="text-white font-semibold cursor-pointer hover:underline"
+                className="text-white font-semibold cursor-pointer hover:underline touch-manipulation"
               >
                 {isLogin ? 'Sign up' : 'Login'}
               </span>
