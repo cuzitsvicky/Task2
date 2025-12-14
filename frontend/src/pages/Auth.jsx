@@ -72,118 +72,168 @@ const Auth = () => {
   };
 
   return (
-    <div className="auth-page glass-background">
-      <div className="auth-card glass-card">
-        <div className="auth-tabs">
-          <button
-            className={`auth-tab ${isLogin ? 'active' : ''}`}
-            onClick={switchToLogin}
-          >
-            Login
-          </button>
-          <button
-            className={`auth-tab ${!isLogin ? 'active' : ''}`}
-            onClick={switchToSignup}
-          >
-            Sign Up
-          </button>
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-black relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-black rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-white rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-white rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+      </div>
 
-        {isLogin ? (
-          <>
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-              {error && <div className="error-message">{error}</div>}
-              <div className="form-group">
-                <label>Email</label>
-                <input
-                  type="email"
-                  value={loginEmail}
-                  onChange={(e) => setLoginEmail(e.target.value)}
-                  required
-                  className="glass-input"
-                />
+      <div className="relative z-10 w-full max-w-md mx-4">
+        {/* Glass morphism card */}
+        <div className="bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 p-8">
+          {/* Tabs */}
+          <div className="flex space-x-2 mb-8 bg-black/30 rounded-lg p-1">
+            <button
+              onClick={switchToLogin}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+                isLogin
+                  ? 'bg-white text-black'
+                  : 'text-white hover:text-black hover:bg-white'
+              }`}
+            >
+              Login
+            </button>
+            <button
+              onClick={switchToSignup}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+                !isLogin
+                  ? 'bg-white text-black'
+                  : 'text-white hover:text-black hover:bg-white'
+              }`}
+            >
+              Sign Up
+            </button>
+          </div>
+
+          {/* Form */}
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold text-white text-center mb-6">
+              {isLogin ? 'Welcome Back' : 'Create Account'}
+            </h2>
+
+            {error && (
+              <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg text-sm">
+                {error}
               </div>
-              <div className="form-group">
-                <label>Password</label>
-                <input
-                  type="password"
-                  value={loginPassword}
-                  onChange={(e) => setLoginPassword(e.target.value)}
-                  required
-                  className="glass-input"
-                />
-              </div>
-              <button type="submit" className="btn btn-primary glass-button" disabled={loading}>
-                {loading ? 'Logging in...' : 'Login'}
-              </button>
-            </form>
-            <p className="auth-link">
-              Don't have an account?{' '}
-              <span className="auth-link-text" onClick={switchToSignup}>
-                Sign up
+            )}
+
+            {isLogin ? (
+              <form onSubmit={handleLogin} className="space-y-5">
+                <div>
+                  <label className="block text-sm font-medium text-white mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    value={loginEmail}
+                    onChange={(e) => setLoginEmail(e.target.value)}
+                    required
+                    className="w-full px-4 py-3 bg-black border border-white rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
+                    placeholder="Enter your email"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-white mb-2">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                    required
+                    className="w-full px-4 py-3 bg-black border border-white rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
+                    placeholder="Enter your password"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading ? 'Logging in...' : 'Login'}
+                </button>
+              </form>
+            ) : (
+              <form onSubmit={handleSignup} className="space-y-5">
+                <div>
+                  <label className="block text-sm font-medium text-white mb-2">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    className="w-full px-4 py-3 bg-black border border-white rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
+                    placeholder="Enter your name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-white mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="w-full px-4 py-3 bg-black border border-white rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
+                    placeholder="Enter your email"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-white mb-2">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    minLength="6"
+                    className="w-full px-4 py-3 bg-black border border-white rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all"
+                    placeholder="Enter your password"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-white mb-2">
+                    Role
+                  </label>
+                  <select
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  >
+                    <option value="user" className="bg-black">User</option>
+                    <option value="trainer" className="bg-black">Trainer</option>
+                  </select>
+                </div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading ? 'Signing up...' : 'Sign Up'}
+                </button>
+              </form>
+            )}
+
+            <p className="text-center text-white/80 text-sm mt-6">
+              {isLogin ? "Don't have an account? " : 'Already have an account? '}
+              <span
+                onClick={isLogin ? switchToSignup : switchToLogin}
+                className="text-black font-semibold cursor-pointer hover:underline"
+              >
+                {isLogin ? 'Sign up' : 'Login'}
               </span>
             </p>
-          </>
-        ) : (
-          <>
-            <h2>Sign Up</h2>
-            <form onSubmit={handleSignup}>
-              {error && <div className="error-message">{error}</div>}
-              <div className="form-group">
-                <label>Name</label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  className="glass-input"
-                />
-              </div>
-              <div className="form-group">
-                <label>Email</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="glass-input"
-                />
-              </div>
-              <div className="form-group">
-                <label>Password</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  minLength="6"
-                  className="glass-input"
-                />
-              </div>
-              <div className="form-group">
-                <label>Role</label>
-                <select value={role} onChange={(e) => setRole(e.target.value)} className="glass-input">
-                  <option value="user">User</option>
-                  <option value="trainer">Trainer</option>
-                </select>
-              </div>
-              <button type="submit" className="btn btn-primary glass-button" disabled={loading}>
-                {loading ? 'Signing up...' : 'Sign Up'}
-              </button>
-            </form>
-            <p className="auth-link">
-              Already have an account?{' '}
-              <span className="auth-link-text" onClick={switchToLogin}>
-                Login
-              </span>
-            </p>
-          </>
-        )}
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
 export default Auth;
-

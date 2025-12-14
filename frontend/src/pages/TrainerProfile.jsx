@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
 import { trainersAPI, followsAPI } from '../services/api';
 
 const TrainerProfile = () => {
@@ -12,6 +13,7 @@ const TrainerProfile = () => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [following, setFollowing] = useState(false);
+  const { showToast } = useToast();
 
   useEffect(() => {
     loadTrainerProfile();
@@ -53,68 +55,106 @@ const TrainerProfile = () => {
       if (isFollowing) {
         await followsAPI.unfollow(trainerId);
         setIsFollowing(false);
+        showToast('Successfully unfollowed trainer', 'success');
       } else {
         await followsAPI.follow(trainerId);
         setIsFollowing(true);
+        showToast('Successfully followed trainer', 'success');
       }
     } catch (error) {
-      alert(error.response?.data?.message || 'Error updating follow status');
+      showToast(error.response?.data?.message || 'Error updating follow status', 'error');
     } finally {
       setFollowing(false);
     }
   };
 
   if (loading) {
-    return <div className="loading">Loading trainer profile...</div>;
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
+          <p className="text-white mt-4">Loading trainer profile...</p>
+        </div>
+      </div>
+    );
   }
 
   if (!trainer) {
-    return <div>Trainer not found</div>;
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-center text-white">
+          <p className="text-xl">Trainer not found</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="trainer-profile-page">
-      <header className="page-header">
-        <button onClick={() => navigate(-1)} className="btn btn-secondary">Back</button>
-        <nav>
-          <Link to="/">All Plans</Link>
-          {user?.role === 'user' && <Link to="/feed">My Feed</Link>}
-        </nav>
-      </header>
+    <div className="min-h-screen bg-black py-8 px-4">
+      <div className="max-w-7xl mx-auto">
+        <button
+          onClick={() => navigate(-1)}
+          className="mb-6 px-4 py-2 bg-black text-white font-semibold rounded-lg hover:bg-white hover:text-black transition-all duration-200 border border-white"
+        >
+          ← Back
+        </button>
 
-      <div className="trainer-profile-card">
-        <h1>{trainer.name}</h1>
-        {trainer.bio && <p className="bio">{trainer.bio}</p>}
-        {user?.role === 'user' && (
-          <button
-            onClick={handleFollow}
-            className={`btn ${isFollowing ? 'btn-secondary' : 'btn-primary'}`}
-            disabled={following}
-          >
-            {following ? 'Updating...' : isFollowing ? 'Unfollow' : 'Follow'}
-          </button>
-        )}
-      </div>
+        <div className="bg-black border border-white rounded-xl p-8 mb-8 text-center">
+          <h1 className="text-4xl font-bold text-white mb-4">{trainer.name}</h1>
+          {trainer.bio && (
+            <p className="text-white mb-6 text-lg max-w-2xl mx-auto">{trainer.bio}</p>
+          )}
+          {user?.role === 'user' && (
+            <button
+              onClick={handleFollow}
+              className={`px-6 py-3 font-semibold rounded-lg transition-all duration-200 ${
+                isFollowing
+                  ? 'bg-black text-white border border-white hover:bg-white hover:text-black'
+                  : 'bg-white text-black hover:bg-black hover:text-white hover:border hover:border-white'
+              }`}
+              disabled={following}
+            >
+              {following ? 'Updating...' : isFollowing ? 'Unfollow' : 'Follow'}
+            </button>
+          )}
+        </div>
 
-      <div className="trainer-plans-section">
-        <h2>Plans by {trainer.name}</h2>
-        {plans.length === 0 ? (
-          <p className="empty-state">This trainer hasn't created any plans yet.</p>
-        ) : (
-          <div className="plans-grid">
-            {plans.map((plan) => (
-              <div key={plan._id} className="plan-card">
-                <h3>{plan.title}</h3>
-                <p className="price">₹{plan.price}</p>
-                <p className="description">{plan.description}</p>
-                <p className="duration">Duration: {plan.duration} days</p>
-                <Link to={`/plans/${plan._id}`} className="btn btn-primary">
-                  View Details
-                </Link>
-              </div>
-            ))}
-          </div>
-        )}
+        <div>
+          <h2 className="text-3xl font-bold text-white mb-6">Plans by {trainer.name}</h2>
+          {plans.length === 0 ? (
+            <div className="text-center py-12 bg-black rounded-xl border border-white">
+              <p className="text-white text-lg">This trainer hasn't created any plans yet.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {plans.map((plan) => (
+                <div
+                  key={plan._id}
+                  className="bg-black border border-white rounded-xl p-6 flex flex-col"
+                >
+                  <h3 className="text-xl font-bold text-white mb-2">{plan.title}</h3>
+                  <p className="text-2xl font-bold text-white mb-4">₹{plan.price}</p>
+                  {plan.description && (
+                    <p className="text-white mb-3 line-clamp-3">{plan.description}</p>
+                  )}
+                  {plan.duration && (
+                    <p className="text-sm text-white mb-4">
+                      Duration: {plan.duration} days
+                    </p>
+                  )}
+                  <div className="mt-auto">
+                    <Link
+                      to={`/plans/${plan._id}`}
+                      className="block w-full text-center py-2 bg-white text-black font-semibold rounded-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-200"
+                    >
+                      View Details
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

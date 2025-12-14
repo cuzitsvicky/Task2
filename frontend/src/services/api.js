@@ -39,6 +39,7 @@ export const plansAPI = {
 // Subscriptions API
 export const subscriptionsAPI = {
   subscribe: (planId) => api.post(`/subscriptions/${planId}`),
+  unsubscribe: (planId) => api.delete(`/subscriptions/${planId}`),
   getMySubscriptions: () => api.get('/subscriptions/my-subscriptions')
 };
 

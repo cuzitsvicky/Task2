@@ -5,6 +5,23 @@ import { authenticate, requireUser } from '../middleware/auth.js';
 
 const router = express.Router();
 
+// Get user's subscriptions (must come before parameterized routes)
+router.get('/my-subscriptions', authenticate, requireUser, async (req, res) => {
+  try {
+    const subscriptions = await Subscription.find({ user: req.userId })
+      .populate('plan')
+      .populate({
+        path: 'plan',
+        populate: { path: 'trainer', select: 'name email bio' }
+      })
+      .sort({ purchasedAt: -1 });
+
+    res.json(subscriptions);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Subscribe to a plan
 router.post('/:planId', authenticate, requireUser, async (req, res) => {
   try {
@@ -40,18 +57,19 @@ router.post('/:planId', authenticate, requireUser, async (req, res) => {
   }
 });
 
-// Get user's subscriptions
-router.get('/my-subscriptions', authenticate, requireUser, async (req, res) => {
+// Unsubscribe from a plan
+router.delete('/:planId', authenticate, requireUser, async (req, res) => {
   try {
-    const subscriptions = await Subscription.find({ user: req.userId })
-      .populate('plan')
-      .populate({
-        path: 'plan',
-        populate: { path: 'trainer', select: 'name email bio' }
-      })
-      .sort({ purchasedAt: -1 });
+    const subscription = await Subscription.findOneAndDelete({
+      user: req.userId,
+      plan: req.params.planId
+    });
 
-    res.json(subscriptions);
+    if (!subscription) {
+      return res.status(404).json({ message: 'Subscription not found' });
+    }
+
+    res.json({ message: 'Successfully unsubscribed from plan' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
