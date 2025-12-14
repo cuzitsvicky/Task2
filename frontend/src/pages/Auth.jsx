@@ -224,7 +224,7 @@ const Auth = () => {
               {isLogin ? "Don't have an account? " : 'Already have an account? '}
               <span
                 onClick={isLogin ? switchToSignup : switchToLogin}
-                className="text-black font-semibold cursor-pointer hover:underline"
+                className="text-white font-semibold cursor-pointer hover:underline"
               >
                 {isLogin ? 'Sign up' : 'Login'}
               </span>
