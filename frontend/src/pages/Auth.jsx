@@ -90,7 +90,7 @@ const Auth = () => {
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
                 isLogin
                   ? 'bg-white text-black'
-                  : 'text-white hover:text-black hover:bg-white'
+                  : 'text-white'
               }`}
             >
               Login
@@ -100,7 +100,7 @@ const Auth = () => {
               className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
                 !isLogin
                   ? 'bg-white text-black'
-                  : 'text-white hover:text-black hover:bg-white'
+                  : 'text-white'
               }`}
             >
               Sign Up
@@ -150,7 +150,7 @@ const Auth = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Logging in...' : 'Login'}
                 </button>
@@ -213,7 +213,7 @@ const Auth = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Signing up...' : 'Sign Up'}
                 </button>

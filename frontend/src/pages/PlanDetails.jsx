@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { plansAPI, subscriptionsAPI, followsAPI } from '../services/api';
+import ConfirmationDialog from '../components/ConfirmationDialog';
 
 const PlanDetails = () => {
   const { id } = useParams();
@@ -15,6 +16,8 @@ const PlanDetails = () => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [following, setFollowing] = useState(false);
   const { showToast } = useToast();
+  const [showSubscribeConfirm, setShowSubscribeConfirm] = useState(false);
+  const [showUnsubscribeConfirm, setShowUnsubscribeConfirm] = useState(false);
 
   useEffect(() => {
     loadPlan();
@@ -67,9 +70,12 @@ const PlanDetails = () => {
     }
   };
 
-  const handleSubscribe = async () => {
-    if (!window.confirm(`Subscribe to this plan for ₹${plan.price}?`)) return;
-    
+  const handleSubscribe = () => {
+    setShowSubscribeConfirm(true);
+  };
+
+  const confirmSubscribe = async () => {
+    setShowSubscribeConfirm(false);
     setSubscribing(true);
     try {
       await subscriptionsAPI.subscribe(id);
@@ -82,9 +88,12 @@ const PlanDetails = () => {
     }
   };
 
-  const handleUnsubscribe = async () => {
-    if (!window.confirm(`Are you sure you want to unsubscribe from "${plan.title}"?`)) return;
-    
+  const handleUnsubscribe = () => {
+    setShowUnsubscribeConfirm(true);
+  };
+
+  const confirmUnsubscribe = async () => {
+    setShowUnsubscribeConfirm(false);
     setUnsubscribing(true);
     try {
       const response = await subscriptionsAPI.unsubscribe(id);
@@ -127,7 +136,7 @@ const PlanDetails = () => {
       <div className="max-w-4xl mx-auto">
         <button
           onClick={() => navigate(-1)}
-          className="mb-6 px-4 py-2 bg-black text-white font-semibold rounded-lg hover:bg-white hover:text-black transition-all duration-200 border border-white"
+          className="mb-6 px-4 py-2 bg-black text-white font-semibold rounded-lg hover:scale-105 transition-transform duration-200 border border-white"
         >
           ← Back
         </button>
@@ -137,7 +146,7 @@ const PlanDetails = () => {
           <div className="mb-6 flex items-center gap-3">
             <Link
               to={`/trainers/${plan.trainer?._id}`}
-              className="text-white text-lg hover:text-yellow-400 transition-colors"
+              className="text-white text-lg hover:scale-105 transition-transform duration-200 inline-block"
             >
               {plan.trainer?.name}
             </Link>
@@ -147,8 +156,8 @@ const PlanDetails = () => {
                 disabled={following}
                 className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all duration-200 ${
                   isFollowing
-                    ? 'bg-black text-white border border-white hover:bg-white hover:text-black'
-                    : 'bg-white text-black hover:bg-black hover:text-white hover:border hover:border-white'
+                    ? 'bg-black-500 text-white border border-white hover:scale-105'
+                    : 'bg-blue-500 text-white hover:scale-105'
                 }`}
               >
                 {following ? '...' : isFollowing ? 'Unfollow' : 'Follow'}
@@ -177,7 +186,7 @@ const PlanDetails = () => {
                   {user?.role === 'user' && (
                     <button
                       onClick={handleUnsubscribe}
-                      className="w-full py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full py-3 bg-red-600 text-white font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                       disabled={unsubscribing}
                     >
                       {unsubscribing ? 'Unsubscribing...' : 'Unsubscribe from Plan'}
@@ -188,7 +197,7 @@ const PlanDetails = () => {
               {user?.role === 'user' && !plan.isSubscribed && (
                 <button
                   onClick={handleSubscribe}
-                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={subscribing}
                 >
                   {subscribing ? 'Subscribing...' : 'Subscribe to Plan'}
@@ -203,7 +212,7 @@ const PlanDetails = () => {
               {user?.role === 'user' && (
                 <button
                   onClick={handleSubscribe}
-                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={subscribing}
                 >
                   {subscribing ? 'Subscribing...' : `Subscribe for ₹${plan.price}`}
@@ -213,6 +222,20 @@ const PlanDetails = () => {
           )}
         </div>
       </div>
+      <ConfirmationDialog
+        isOpen={showSubscribeConfirm}
+        onClose={() => setShowSubscribeConfirm(false)}
+        onConfirm={confirmSubscribe}
+        title="Subscribe to Plan"
+        message={`Subscribe to this plan for ₹${plan?.price}?`}
+      />
+      <ConfirmationDialog
+        isOpen={showUnsubscribeConfirm}
+        onClose={() => setShowUnsubscribeConfirm(false)}
+        onConfirm={confirmUnsubscribe}
+        title="Unsubscribe from Plan"
+        message={`Are you sure you want to unsubscribe from "${plan?.title}"?`}
+      />
     </div>
   );
 };

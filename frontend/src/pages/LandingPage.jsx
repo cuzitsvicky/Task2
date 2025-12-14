@@ -36,16 +36,11 @@ const LandingPage = () => {
           <div className="flex gap-4 justify-center">
             <Link
               to="/login"
-              className="px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-200"
+              className="px-6 py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200"
             >
-              Login
+              Get Started
             </Link>
-            <Link
-              to="/signup"
-              className="px-6 py-3 bg-black text-white font-semibold rounded-lg hover:bg-white hover:text-black transition-all duration-200 border border-white"
-            >
-              Sign Up
-            </Link>
+           
           </div>
         </div>
       </div>
@@ -93,7 +88,7 @@ const LandingPage = () => {
                 <div className="mt-auto">
                   <Link
                     to={`/plans/${plan._id}`}
-                    className="block w-full text-center py-2 bg-white text-black font-semibold rounded-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-200"
+                    className="block w-full text-center py-2 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200"
                   >
                     {plan.description ? 'View Details' : 'View Preview'}
                   </Link>

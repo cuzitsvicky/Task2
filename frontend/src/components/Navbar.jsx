@@ -34,7 +34,7 @@ const Navbar = () => {
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 backdrop-blur-sm ${
                     isActive('/')
                       ? 'bg-white/20 text-white border border-white/30 shadow-md'
-                      : 'text-white hover:bg-white/10 hover:border hover:border-white/20'
+                      : 'text-white hover:scale-105'
                   }`}
                 >
                   All Plans
@@ -44,7 +44,7 @@ const Navbar = () => {
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 backdrop-blur-sm ${
                     isActive('/feed')
                       ? 'bg-white/20 text-white border border-white/30 shadow-md'
-                      : 'text-white hover:bg-white/10 hover:border hover:border-white/20'
+                      : 'text-white hover:scale-105'
                   }`}
                 >
                   Feed
@@ -55,7 +55,7 @@ const Navbar = () => {
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 backdrop-blur-sm ${
                       isActive('/my-subscriptions')
                         ? 'bg-white/20 text-white border border-white/30 shadow-md'
-                        : 'text-white hover:bg-white/10 hover:border hover:border-white/20'
+                        : 'text-white hover:scale-105'
                     }`}
                   >
                     Subscriptions
@@ -67,7 +67,7 @@ const Navbar = () => {
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 backdrop-blur-sm ${
                       isActive('/dashboard')
                         ? 'bg-white/20 text-white border border-white/30 shadow-md'
-                        : 'text-white hover:bg-white/10 hover:border hover:border-white/20'
+                        : 'text-white hover:scale-105'
                     }`}
                   >
                     Trainer Dashboard
@@ -77,7 +77,7 @@ const Navbar = () => {
                   <span className="text-sm text-white drop-shadow-md">{user.name}</span>
                   <button
                     onClick={handleLogout}
-                    className="px-4 py-2 bg-white/20 backdrop-blur-sm text-white text-sm font-medium rounded-lg border border-white/30 hover:bg-white/30 hover:shadow-md transition-all duration-200"
+                    className="px-4 py-2 bg-white/20 backdrop-blur-sm text-white text-sm font-medium rounded-lg border border-white/30 hover:scale-105 transition-transform duration-200"
                   >
                     Logout
                   </button>
@@ -90,7 +90,7 @@ const Navbar = () => {
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 backdrop-blur-sm ${
                     isActive('/')
                       ? 'bg-white/20 text-white border border-white/30 shadow-md'
-                      : 'text-white hover:bg-white/10 hover:border hover:border-white/20'
+                      : 'text-white hover:scale-105'
                   }`}
                 >
                   Home
@@ -100,7 +100,7 @@ const Navbar = () => {
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 backdrop-blur-sm ${
                     isActive('/login')
                       ? 'bg-white/20 text-white border border-white/30 shadow-md'
-                      : 'text-white hover:bg-white/10 hover:border hover:border-white/20'
+                      : 'text-white hover:scale-105'
                   }`}
                 >
                   Login/SignUp

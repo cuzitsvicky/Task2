@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '../context/ToastContext';
 import { plansAPI } from '../services/api';
 import api from '../services/api';
+import ConfirmationDialog from '../components/ConfirmationDialog';
 
 const TrainerDashboard = () => {
   const [plans, setPlans] = useState([]);
@@ -17,6 +18,8 @@ const TrainerDashboard = () => {
   });
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [selectedPlanId, setSelectedPlanId] = useState(null);
 
   useEffect(() => {
     loadPlans();
@@ -62,15 +65,23 @@ const TrainerDashboard = () => {
     setShowForm(true);
   };
 
-  const handleDelete = async (planId) => {
-    if (!window.confirm('Are you sure you want to delete this plan?')) return;
+  const handleDelete = (planId) => {
+    setSelectedPlanId(planId);
+    setShowDeleteConfirm(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!selectedPlanId) return;
     
+    setShowDeleteConfirm(false);
     try {
-      await api.delete(`/plans/${planId}`);
+      await api.delete(`/plans/${selectedPlanId}`);
       showToast('Plan deleted successfully', 'success');
       loadPlans();
     } catch (error) {
       showToast(error.response?.data?.message || 'Error deleting plan', 'error');
+    } finally {
+      setSelectedPlanId(null);
     }
   };
 
@@ -92,7 +103,7 @@ const TrainerDashboard = () => {
           <h2 className="text-2xl font-semibold text-white">My Fitness Plans</h2>
           <button
             onClick={() => setShowForm(true)}
-            className="px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-200"
+            className="px-6 py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200"
           >
             Create New Plan
           </button>
@@ -150,14 +161,14 @@ const TrainerDashboard = () => {
               <div className="flex gap-4">
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-200"
+                  className="px-6 py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200"
                 >
                   {editingPlan ? 'Update Plan' : 'Create Plan'}
                 </button>
                 <button
                   type="button"
                   onClick={handleCancel}
-                  className="px-6 py-3 bg-black text-white font-semibold rounded-lg hover:bg-white hover:text-black transition-all duration-200 border border-white"
+                  className="px-6 py-3 bg-black text-white font-semibold rounded-lg hover:scale-105 transition-transform duration-200 border border-white"
                 >
                   Cancel
                 </button>
@@ -191,19 +202,19 @@ const TrainerDashboard = () => {
                 <div className="mt-auto flex gap-2">
                   <button
                     onClick={() => handleEdit(plan)}
-                    className="flex-1 px-4 py-2 bg-black text-white font-semibold rounded-lg hover:bg-white hover:text-black transition-all duration-200 border border-white text-sm"
+                    className="flex-1 px-4 py-2 bg-black text-white font-semibold rounded-lg hover:scale-105 transition-transform duration-200 border border-white text-sm"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(plan._id)}
-                    className="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-200 text-sm"
+                    className="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg hover:scale-105 transition-transform duration-200 text-sm"
                   >
                     Delete
                   </button>
                   <button
                     onClick={() => navigate(`/plans/${plan._id}`)}
-                    className="px-4 py-2 bg-white text-black font-semibold rounded-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-200 text-sm"
+                    className="px-4 py-2 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200 text-sm"
                   >
                     View
                   </button>
@@ -218,6 +229,16 @@ const TrainerDashboard = () => {
           </div>
         )}
       </div>
+      <ConfirmationDialog
+        isOpen={showDeleteConfirm}
+        onClose={() => {
+          setShowDeleteConfirm(false);
+          setSelectedPlanId(null);
+        }}
+        onConfirm={confirmDelete}
+        title="Delete Plan"
+        message="Are you sure you want to delete this plan? This action cannot be undone."
+      />
     </div>
   );
 };

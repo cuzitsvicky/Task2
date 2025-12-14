@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { subscriptionsAPI } from '../services/api';
+import ConfirmationDialog from '../components/ConfirmationDialog';
 
 const MySubscriptions = () => {
   const { user } = useAuth();
@@ -10,6 +11,8 @@ const MySubscriptions = () => {
   const [loading, setLoading] = useState(true);
   const [unsubscribing, setUnsubscribing] = useState({});
   const { showToast } = useToast();
+  const [showUnsubscribeConfirm, setShowUnsubscribeConfirm] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
 
   useEffect(() => {
     if (user?.role === 'user') {
@@ -28,12 +31,18 @@ const MySubscriptions = () => {
     }
   };
 
-  const handleUnsubscribe = async (planId, planTitle) => {
-    if (!window.confirm(`Are you sure you want to unsubscribe from "${planTitle}"?`)) return;
+  const handleUnsubscribe = (planId, planTitle) => {
+    setSelectedPlan({ id: planId, title: planTitle });
+    setShowUnsubscribeConfirm(true);
+  };
+
+  const confirmUnsubscribe = async () => {
+    if (!selectedPlan) return;
     
-    setUnsubscribing(prev => ({ ...prev, [planId]: true }));
+    setShowUnsubscribeConfirm(false);
+    setUnsubscribing(prev => ({ ...prev, [selectedPlan.id]: true }));
     try {
-      const response = await subscriptionsAPI.unsubscribe(planId);
+      const response = await subscriptionsAPI.unsubscribe(selectedPlan.id);
       showToast('Successfully unsubscribed from plan', 'success');
       loadSubscriptions();
     } catch (error) {
@@ -41,7 +50,8 @@ const MySubscriptions = () => {
       console.error('Error response:', error.response);
       showToast(error.response?.data?.message || error.message || 'Error unsubscribing from plan', 'error');
     } finally {
-      setUnsubscribing(prev => ({ ...prev, [planId]: false }));
+      setUnsubscribing(prev => ({ ...prev, [selectedPlan.id]: false }));
+      setSelectedPlan(null);
     }
   };
 
@@ -75,7 +85,7 @@ const MySubscriptions = () => {
                 <p className="text-white mb-4">You haven't subscribed to any plans yet.</p>
                 <Link
                   to="/"
-                  className="inline-block px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-200"
+                  className="inline-block px-6 py-3 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200"
                 >
                   Browse Plans
                 </Link>
@@ -111,14 +121,14 @@ const MySubscriptions = () => {
                       <div className="mt-auto space-y-2">
                         <Link
                           to={`/plans/${plan._id}`}
-                          className="block w-full text-center py-2 bg-white text-black font-semibold rounded-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-200"
+                          className="block w-full text-center py-2 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200"
                         >
                           View Plan
                         </Link>
                         <button
                           onClick={() => handleUnsubscribe(plan._id, plan.title)}
                           disabled={unsubscribing[plan._id]}
-                          className="w-full py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="w-full py-2 bg-red-600 text-white font-semibold rounded-lg hover:scale-105 transition-transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           {unsubscribing[plan._id] ? 'Unsubscribing...' : 'Unsubscribe'}
                         </button>
@@ -131,6 +141,16 @@ const MySubscriptions = () => {
           </>
         )}
       </div>
+      <ConfirmationDialog
+        isOpen={showUnsubscribeConfirm}
+        onClose={() => {
+          setShowUnsubscribeConfirm(false);
+          setSelectedPlan(null);
+        }}
+        onConfirm={confirmUnsubscribe}
+        title="Unsubscribe from Plan"
+        message={`Are you sure you want to unsubscribe from "${selectedPlan?.title}"?`}
+      />
     </div>
   );
 };

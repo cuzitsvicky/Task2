@@ -94,7 +94,7 @@ const TrainerProfile = () => {
       <div className="max-w-7xl mx-auto">
         <button
           onClick={() => navigate(-1)}
-          className="mb-6 px-4 py-2 bg-black text-white font-semibold rounded-lg hover:bg-white hover:text-black transition-all duration-200 border border-white"
+          className="mb-6 px-4 py-2 bg-black text-white font-semibold rounded-lg hover:scale-105 transition-transform duration-200 border border-white"
         >
           ← Back
         </button>
@@ -109,8 +109,8 @@ const TrainerProfile = () => {
               onClick={handleFollow}
               className={`px-6 py-3 font-semibold rounded-lg transition-all duration-200 ${
                 isFollowing
-                  ? 'bg-black text-white border border-white hover:bg-white hover:text-black'
-                  : 'bg-white text-black hover:bg-black hover:text-white hover:border hover:border-white'
+                  ? 'bg-black text-white border border-white hover:scale-105'
+                  : 'bg-white text-black hover:scale-105'
               }`}
               disabled={following}
             >
@@ -145,7 +145,7 @@ const TrainerProfile = () => {
                   <div className="mt-auto">
                     <Link
                       to={`/plans/${plan._id}`}
-                      className="block w-full text-center py-2 bg-white text-black font-semibold rounded-lg hover:bg-black hover:text-white hover:border hover:border-white transition-all duration-200"
+                      className="block w-full text-center py-2 bg-white text-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200"
                     >
                       View Details
                     </Link>
